@@ -5,7 +5,9 @@ RUN git clone https://github.com/slzcc/Scrapy-Docker-Docs.git && \
 
 ENV ELASTICSEARCH_DB_SERVER=http://localhost:9200 \
     ELASTICSEARCH_DATA_INDEX=docker-docs \
-    ELASTICSEARCH_DATA_TYPE=item 
+    ELASTICSEARCH_DATA_TYPE=item \
+    CONCURRENT_REQUESTS=32 \
+    DOWNLOAD_DELAY=1
 
 WORKDIR /Scrapy-51job-jobs
 
