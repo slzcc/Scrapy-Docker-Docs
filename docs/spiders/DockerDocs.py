@@ -19,5 +19,5 @@ class DockerdocsSpider(CrawlSpider):
         item['url'] = response.url
         item['description'] = response.xpath('//section[@class="section"]/h1/text()').extract()
         item['title'] = response.xpath('//title/text()').extract()
-        item['data'] = html2text.html2text(response.xpath('//div[@class="col-body"]').extract()[0])
+        item['data'] = html2text.html2text(response.xpath('//main[@class="col-content content"]').extract()[0])
         return item

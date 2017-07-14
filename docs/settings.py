@@ -24,7 +24,6 @@ NEWSPIDER_MODULE = 'docs.spiders'
 # ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
 
 CONCURRENT_REQUESTS = int(os.getenv('CONCURRENT_REQUESTS'))
 
@@ -106,3 +105,4 @@ ELASTICSEARCH_DATA_TYPE = os.getenv('ELASTICSEARCH_DATA_TYPE')
 # ELASTICSEARCH_COOKIE_TYPE = "item"
 # ELASTICSEARCH_DATA_INDEX = "docs-data"
 # ELASTICSEARCH_DATA_TYPE = "item"
+# CONCURRENT_REQUESTS = 32
