@@ -11,6 +11,6 @@ ENV REDIS_DB_HOST=127.0.0.1 \
     CONCURRENT_REQUESTS=32 \
     DOWNLOAD_DELAY=1
 
-WORKDIR /Scrapy-51job-jobs
+WORKDIR /Scrapy-Docker-Docs
 
 CMD ["python", "main.py"]
