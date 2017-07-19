@@ -7,6 +7,10 @@ import html2text, re, redis, os
 
 REDIS_HOST = os.getenv('REDIS_DB_HOST')
 REDIS_PORT = int(os.getenv('REDIS_DB_PORT'))
+
+# REDIS_HOST = '127.0.0.1'
+# REDIS_PORT = '6379'
+
 redis_q = redis.StrictRedis(connection_pool=redis.ConnectionPool(host=REDIS_HOST, port=REDIS_PORT, db=0))
 
 class DockerdocsSpider(CrawlSpider):

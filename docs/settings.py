@@ -101,6 +101,10 @@ ELASTICSEARCH_DATA_TYPE = os.getenv('ELASTICSEARCH_DATA_TYPE')
 CONCURRENT_REQUESTS = int(os.getenv('CONCURRENT_REQUESTS'))
 DOWNLOAD_DELAY = int(os.getenv('DOWNLOAD_DELAY'))
 
+REDIS_HOST = os.getenv('REDIS_DB_HOST')
+REDIS_PORT = int(os.getenv('REDIS_DB_PORT'))
+
+
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
@@ -109,13 +113,13 @@ SCHEDULER_PERSIST = True
 
 SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderPriorityQueue"
 
-REDIS_HOST = os.getenv('REDIS_DB_HOST')
-REDIS_PORT = int(os.getenv('REDIS_DB_PORT'))
 
 
 # ELASTICSEARCH_DB_SERVER = "http://192.166.1.10:9200"
 # ELASTICSEARCH_COOKIE_INDEX = "cookie-data"
 # ELASTICSEARCH_COOKIE_TYPE = "item"
-# ELASTICSEARCH_DATA_INDEX = "docs-data"
+# ELASTICSEARCH_DATA_INDEX = "docs-test"
 # ELASTICSEARCH_DATA_TYPE = "item"
-# CONCURRENT_REQUESTS = 32
+# CONCURRENT_REQUESTS = 132
+# REDIS_HOST = '127.0.0.1'
+# REDIS_PORT = '6379'

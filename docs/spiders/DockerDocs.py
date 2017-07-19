@@ -12,7 +12,7 @@ class DockerdocsSpider(RedisSpider):
     allowed_domains = ['47.52.73.177']
     redis_key = 'docs:start_urls'
 
-    def parse_item(self, response):
+    def parse(self, response):
         yield scrapy.Request(url=response.url, callback=self.pares_data)
 
     def pares_data(self, response):
