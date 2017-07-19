@@ -1,3 +1,4 @@
 elasticsearch
 Scrapy
+redis
 html2text

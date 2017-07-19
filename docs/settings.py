@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os
+import os, scrapy_redis
 
 # Scrapy settings for docs project
 #
@@ -25,14 +25,12 @@ NEWSPIDER_MODULE = 'docs.spiders'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 
-CONCURRENT_REQUESTS = int(os.getenv('CONCURRENT_REQUESTS'))
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 #DOWNLOAD_DELAY = 3
 
-DOWNLOAD_DELAY = int(os.getenv('DOWNLOAD_DELAY'))
 
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
@@ -72,6 +70,7 @@ DOWNLOAD_DELAY = int(os.getenv('DOWNLOAD_DELAY'))
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'docs.pipelines.DocsPipeline': 300,
+   'scrapy_redis.pipelines.RedisPipeline': 301,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -98,6 +97,20 @@ ITEM_PIPELINES = {
 ELASTICSEARCH_DB_SERVER = os.getenv('ELASTICSEARCH_DB_SERVER')
 ELASTICSEARCH_DATA_INDEX = os.getenv('ELASTICSEARCH_DATA_INDEX')
 ELASTICSEARCH_DATA_TYPE = os.getenv('ELASTICSEARCH_DATA_TYPE')
+
+CONCURRENT_REQUESTS = int(os.getenv('CONCURRENT_REQUESTS'))
+DOWNLOAD_DELAY = int(os.getenv('DOWNLOAD_DELAY'))
+
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+
+SCHEDULER_PERSIST = True
+
+SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderPriorityQueue"
+
+REDIS_HOST = os.getenv('REDIS_DB_HOST')
+REDIS_PORT = int(os.getenv('REDIS_DB_PORT'))
 
 
 # ELASTICSEARCH_DB_SERVER = "http://192.166.1.10:9200"
