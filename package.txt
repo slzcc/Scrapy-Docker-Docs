@@ -1,4 +1,5 @@
 elasticsearch
+scrapy_redis
 Scrapy
 redis
 html2text
