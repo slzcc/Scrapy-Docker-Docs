@@ -1,6 +1,6 @@
 # Scrapy-Docker-Docs
 ## Docs Search Engine
-获取 Docs 网站 URL 并注入 Redis ，Scrapy 从 Redis 获取 URL 开启爬取 150 字符内容数据并注入到 Elasticsearch，访问过得 URL 通过 Redis Set 去重。
+获取 Docs 网站 URL 并注入 Redis ，Scrapy 从 Redis 获取 URL 开启爬取 150 字符内容数据并注入到 Elasticsearch，被访问的 URL 通过 Redis Set 去重。
 
 Docker Image
 ```
