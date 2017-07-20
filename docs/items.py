@@ -15,3 +15,4 @@ class DocsItem(scrapy.Item):
     title = scrapy.Field()
     data = scrapy.Field()
     description = scrapy.Field()
+    texts = scrapy.Field()

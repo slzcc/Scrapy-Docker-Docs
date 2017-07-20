@@ -22,7 +22,7 @@ class DockerdocsSpider(RedisSpider):
         item['url'] = response.url
         item['description'] = response.xpath('//section[@class="section"]/h1/text()').extract()[0]
         item['title'] = response.xpath('//title/text()').extract()[0]
-
+        item['texts'] = html2text.html2text(response.xpath('//section[@class="section"]').extract()[0])
         item['data'] = html2text.html2text(response.xpath('//section[@class="section"]').extract()[0])
         if re.findall('\*\*此内容.*?\*\*', item['data']):
             item['data'] = re.split('\*\*此内容.*?\*\*\s', item['data'])[1]
