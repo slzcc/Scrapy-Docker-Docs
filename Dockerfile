@@ -5,11 +5,17 @@ RUN git clone https://github.com/slzcc/Scrapy-Docker-Docs.git && \
 
 ENV REDIS_DB_HOST=127.0.0.1 \
     REDIS_DB_PORT=6379 \
+    REDIS_KEY = docs:start_urls \
     ELASTICSEARCH_DB_SERVER=http://localhost:9200 \
     ELASTICSEARCH_DATA_INDEX=docker-docs \
     ELASTICSEARCH_DATA_TYPE=item \
     CONCURRENT_REQUESTS=32 \
-    DOWNLOAD_DELAY=1
+    DOWNLOAD_DELAY=1 \
+    Rules_Deny="('#.*?', 'term*?', 'v1.*?', '.*?md', )" \
+    Rules_All="('',)" \
+    DocsURL="http://47.52.73.177:8888/" \
+    Domains="47.52.73.177" \
+    Start=True
 
 WORKDIR /Scrapy-Docker-Docs
 
