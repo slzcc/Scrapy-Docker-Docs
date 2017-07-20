@@ -5,6 +5,7 @@ RUN git clone https://github.com/slzcc/Scrapy-Docker-Docs.git && \
 
 ENV REDIS_DB_HOST=127.0.0.1 \
     REDIS_DB_PORT=6379 \
+    REDIS_DB_INDEX=0 \
     REDIS_KEY="docs:start_urls" \
     ELASTICSEARCH_DB_SERVER=http://localhost:9200 \
     ELASTICSEARCH_DATA_INDEX=docker-docs \

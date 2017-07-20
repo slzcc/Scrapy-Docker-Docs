@@ -8,11 +8,11 @@ DocsURL = os.getenv("DocsURL")
 
 REDIS_HOST = os.getenv('REDIS_DB_HOST')
 REDIS_PORT = int(os.getenv('REDIS_DB_PORT'))
-
+REDIS_INDEX = int(os.getenv('REDIS_DB_INDEX'))
 threads = []
 Counter = 0
 
-redis_q = redis.StrictRedis(connection_pool=redis.ConnectionPool(host=REDIS_HOST, port=REDIS_PORT, db=0))
+redis_q = redis.StrictRedis(connection_pool=redis.ConnectionPool(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_INDEX))
 
 header = {
 		'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
