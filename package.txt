@@ -1,5 +1,6 @@
 elasticsearch
 scrapy_redis
 Scrapy
+requests
 redis
 html2text
