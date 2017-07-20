@@ -61,3 +61,4 @@ $ curl -X GET http://192.168.0.3:9200/docs-test/item/_search?q=docker&size=10&pr
       },
 ...
 ```
+如果注入 Elasticsearch 数据过慢，请启动多个 3 步骤实例，无上限。
