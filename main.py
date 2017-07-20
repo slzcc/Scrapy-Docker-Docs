@@ -6,4 +6,4 @@ if os.getenv('Start') == 'URL':
 elif os.getenv('Start') == True:
     cmdline.execute("scrapy crawl DockerDocs".split())
 else:
-    cmdline.execute("python docs/ObtainUrl.py".split())
+    os.system("python docs/ObtainUrl.py")
