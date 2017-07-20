@@ -15,12 +15,12 @@ redis_q = redis.StrictRedis(connection_pool=redis.ConnectionPool(host=REDIS_HOST
 
 class DockerdocsSpider(CrawlSpider):
     name = 'DockerDocs_Url'
-    allowed_domains = ['47.52.73.177']
-    start_urls = ['http://47.52.73.177:8888/']
+    allowed_domains = [os.getenv("Domains")]
+    start_urls = [os.getenv("DocsURL")]
     
     rules = (
-        Rule(LinkExtractor(allow=('', ), deny=('#.*?', 'term*?', 'v1.*?',)), callback='parse_item', follow=True),
+        Rule(LinkExtractor(allow=os.getenv('Rules_All'), deny=os.getenv('Rules_Deny')), callback='parse_item', follow=True),
     )
 
     def parse_item(self, response):
-        redis_q.lpush('docs:start_urls', response.url)
+        redis_q.lpush(os.getenv("REDIS_KEY"), response.url)
