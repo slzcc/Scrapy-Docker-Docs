@@ -26,6 +26,8 @@ class DockerdocsSpider(RedisSpider):
             item['data'] = re.split('\*\*此内容.*?\*\*\s', item['data'])[1]
         if re.findall('>', item['data']):
             item['data'] = re.sub('>', "", item['data'])
+        if re.findall('<', item['data']):
+            item['data'] = re.sub('<', "", item['data'])
         if re.findall('\*\*', item['data']):
             item['data'] = re.sub('\*\*', "", item['data'])
         item['data'] = re.sub('#\s', "", item['data'])[:100] + "..."
