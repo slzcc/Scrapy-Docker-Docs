@@ -3,7 +3,7 @@ Docker Image
 ```
 registry.aliyuncs.com/slzcc/docker-docs:scrapy_redis
 ```
-具体的 环境变量 定义请查看 [!Dockerfile](Dockerfile) 。
+具体的 环境变量 定义请查看 [Dockerfile](Dockerfile) 。
 
 1、Docker Run Redis
 ```
