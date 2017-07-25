@@ -59,7 +59,8 @@ class DockerdocsSpider(RedisSpider):
             item['data'] = re.sub('\n', "", item['data'])
 
         item['data'] = item['data'][:150] + "..."
-        session = requests.get(url=response.url).content
-        item['md5'] = self.HashObject.update(session)
+
+        self.HashObject.update(requests.get(url=response.url).content)
+        item['md5'] = self.HashObject.hexdigest()
 
         return item
