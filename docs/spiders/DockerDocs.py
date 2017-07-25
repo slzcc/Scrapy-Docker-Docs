@@ -3,7 +3,7 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from docs.items import DocsItem
-import html2text, re, os
+import html2text, re, os, hashlib, requests
 from scrapy_redis.spiders import RedisSpider
 
 class DockerdocsSpider(RedisSpider):
@@ -12,6 +12,7 @@ class DockerdocsSpider(RedisSpider):
     redis_key = os.getenv("REDIS_KEY")
 
     Lists = []
+    HashObject = hashlib.md5()
 
     def parse(self, response):
         yield scrapy.Request(url=response.url, callback=self.pares_data)
@@ -57,4 +58,6 @@ class DockerdocsSpider(RedisSpider):
             item['data'] = re.sub('\n', "", item['data'])
 
         item['data'] = item['data'][:150] + "..."
+        item['md5'] = self.HashObject.update(self.HashObject(requests.get(url=response.url).content))
+
         return item

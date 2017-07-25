@@ -16,3 +16,4 @@ class DocsItem(scrapy.Item):
     data = scrapy.Field()
     description = scrapy.Field()
     texts = scrapy.Field()
+    md5 = scrapy.Field()
