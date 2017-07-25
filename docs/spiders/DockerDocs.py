@@ -28,7 +28,7 @@ class DockerdocsSpider(RedisSpider):
         self.fp.update(response.body or b'')
 
         item['sha1'] = self.fp.hexdigest()
-        
+
         item['length'] = str(len(requests.get(url=response.url).content))
 
         item['url'] = response.url
