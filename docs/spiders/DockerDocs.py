@@ -13,13 +13,15 @@ class DockerdocsSpider(RedisSpider):
     redis_key = os.getenv("REDIS_KEY")
 
     Lists = []
-    HashObject = MD5.new()
 
     def parse(self, response):
         yield scrapy.Request(url=response.url, callback=self.pares_data)
 
     def pares_data(self, response):
         item = DocsItem()
+
+
+        item['length'] = len(requests.get(url=response.url).content)
 
         item['url'] = response.url
         item['description'] = response.xpath('//section[@class="section"]/h1/text()').extract()[0]
@@ -59,9 +61,5 @@ class DockerdocsSpider(RedisSpider):
             item['data'] = re.sub('\n', "", item['data'])
 
         item['data'] = item['data'][:150] + "..."
-
-        session = requests.get(url=response.url).content
-        self.HashObject.update(session)
-        item['md5'] = self.HashObject.hexdigest()
 
         return item
