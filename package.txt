@@ -2,6 +2,6 @@ elasticsearch
 scrapy_redis
 Scrapy
 requests
-hashlib
+crypto
 redis
 html2text

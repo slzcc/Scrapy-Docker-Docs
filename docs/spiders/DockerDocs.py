@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import html2text, re, os, requests
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from docs.items import DocsItem
-import html2text, re, os, hashlib, requests
+from Crypto.Hash import MD5
 from scrapy_redis.spiders import RedisSpider
 
 class DockerdocsSpider(RedisSpider):
@@ -12,7 +13,7 @@ class DockerdocsSpider(RedisSpider):
     redis_key = os.getenv("REDIS_KEY")
 
     Lists = []
-    HashObject = hashlib.md5()
+    HashObject = MD5.new()
 
     def parse(self, response):
         yield scrapy.Request(url=response.url, callback=self.pares_data)
