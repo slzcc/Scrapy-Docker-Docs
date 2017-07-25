@@ -4,8 +4,10 @@ import html2text, re, os, requests
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from docs.items import DocsItem
-from Crypto.Hash import MD5
+from Crypto.Hash import SHA
 from scrapy_redis.spiders import RedisSpider
+from scrapy.utils.python import to_bytes
+from w3lib.url import canonicalize_url
 
 class DockerdocsSpider(RedisSpider):
     name = 'DockerDocs'
@@ -13,6 +15,7 @@ class DockerdocsSpider(RedisSpider):
     redis_key = os.getenv("REDIS_KEY")
 
     Lists = []
+    fp = SHA.new()
 
     def parse(self, response):
         yield scrapy.Request(url=response.url, callback=self.pares_data)
@@ -20,7 +23,12 @@ class DockerdocsSpider(RedisSpider):
     def pares_data(self, response):
         item = DocsItem()
 
+        self.fp.update(to_bytes(response.method))
+        self.fp.update(to_bytes(canonicalize_url(response.url)))
+        self.fp.update(response.body or b'')
 
+        item['sha1'] = self.fp.hexdigest()
+        
         item['length'] = str(len(requests.get(url=response.url).content))
 
         item['url'] = response.url

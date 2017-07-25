@@ -17,3 +17,4 @@ class DocsItem(scrapy.Item):
     description = scrapy.Field()
     texts = scrapy.Field()
     length = scrapy.Field()
+    sha1 = scrapy.Field()
