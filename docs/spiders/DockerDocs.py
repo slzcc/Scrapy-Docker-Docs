@@ -24,8 +24,8 @@ class DockerdocsSpider(RedisSpider):
         item = DocsItem()
 
         self.fp.update(to_bytes(response.request.method))
-        self.fp.update(to_bytes(canonicalize_url(response.url)))
-        self.fp.update(response.body or b'')
+        self.fp.update(to_bytes(canonicalize_url(response.request.url)))
+        self.fp.update(response.request.body or b'')
 
         item['sha1'] = self.fp.hexdigest()
 
