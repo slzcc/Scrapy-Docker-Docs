@@ -21,7 +21,7 @@ class DockerdocsSpider(RedisSpider):
         item = DocsItem()
 
 
-        item['length'] = len(requests.get(url=response.url).content)
+        item['length'] = str(len(requests.get(url=response.url).content))
 
         item['url'] = response.url
         item['description'] = response.xpath('//section[@class="section"]/h1/text()').extract()[0]
