@@ -23,7 +23,7 @@ class DockerdocsSpider(RedisSpider):
     def pares_data(self, response):
         item = DocsItem()
 
-        self.fp.update(to_bytes(response.method))
+        self.fp.update(to_bytes(response.request.method))
         self.fp.update(to_bytes(canonicalize_url(response.url)))
         self.fp.update(response.body or b'')
 
