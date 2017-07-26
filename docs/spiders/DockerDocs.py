@@ -23,10 +23,6 @@ class DockerdocsSpider(RedisSpider):
     def pares_data(self, response):
         item = DocsItem()
 
-        self.fp.update(to_bytes(canonicalize_url(response.url)))
-
-        item['sha1'] = self.fp.hexdigest()
-
         item['length'] = str(len(requests.get(url=response.url).content))
 
         item['url'] = response.url
@@ -68,4 +64,7 @@ class DockerdocsSpider(RedisSpider):
 
         item['data'] = item['data'][:150] + "..."
 
+        self.fp.update(to_bytes(item['url']))
+        print("Type URL : ", type(response.url), "Type Item URL Data : ", type(item['url']))
+        item['sha1'] = self.fp.hexdigest()
         return item
