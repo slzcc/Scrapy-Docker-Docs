@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import os, scrapy_redis
+import os
+from .spiders.scrapy_redis import *
 
 # Scrapy settings for docs project
 #
