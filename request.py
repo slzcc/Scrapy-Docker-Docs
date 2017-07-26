@@ -69,7 +69,7 @@ def request_fingerprint(request, include_headers=None):
             URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "url:" + "\"" + request.url + "\"" + "&size=1"
             # print(URL)
             Session = requests.get(url=URL).content
-            for i in json.loads(Session)['hits']['total']:
+            for i in json.loads(Session):
                 if not i['hits']['hits']['_source']['url'] == request.url:
                     DATA['timestamp'] = datetime.datetime.now()
                     DATA['url'] = request.url
