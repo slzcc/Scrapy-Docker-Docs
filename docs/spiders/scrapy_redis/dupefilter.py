@@ -113,6 +113,7 @@ class RFPDupeFilter(BaseDupeFilter):
 
         """
         REDIS_SHA1 = request_fingerprint(request)
+        print("REDIS_SHA1 : ",REDIS_SHA1)
         return REDIS_SHA1
 
     def close(self, reason=''):
