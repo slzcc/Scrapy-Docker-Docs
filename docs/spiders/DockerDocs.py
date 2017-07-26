@@ -23,9 +23,7 @@ class DockerdocsSpider(RedisSpider):
     def pares_data(self, response):
         item = DocsItem()
 
-        self.fp.update(to_bytes(response.request.method))
         self.fp.update(to_bytes(canonicalize_url(response.request.url)))
-        self.fp.update(response.request.body or b'')
 
         item['sha1'] = self.fp.hexdigest()
 
@@ -58,8 +56,8 @@ class DockerdocsSpider(RedisSpider):
         if re.findall('\*', item['data']):
             item['data'] = re.sub('\*', "", item['data'])
             item['data'] = re.sub('\*\s', "", item['data'])
-        if re.findall('Estimated reading time: .* minute.*', item['data']):
-            item['data'] = re.sub('.* minute.*\s', "", item['data'])
+        if re.findall('估计阅读时间: .* 分钟.*', item['data']):
+            item['data'] = re.sub('.* 分钟.*\s', "", item['data'])
         if re.findall('^#{2,}', item['data']):
             item['data'] = re.sub('^#{2,} \w*', "", item['data'])
         if re.findall('\[.*\]\(.*\)', item['data']):

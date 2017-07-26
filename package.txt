@@ -1,5 +1,6 @@
 pycrypto
 elasticsearch
+scrapy_redis
 Scrapy
 requests
 redis
