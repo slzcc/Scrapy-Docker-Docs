@@ -66,6 +66,7 @@ def request_fingerprint(request, include_headers=None):
         fp.update(to_bytes(canonicalize_url(request.url)))
         cache[include_headers] = fp.hexdigest()
         URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "url:" + "\"" + request.url + "\"" + "&size=1"
+        print(URL)
         Session = requests.get(url=URL).content
         SearchNum = json.loads(Session)['hits']['total']
         if not SearchNum >= 1:
