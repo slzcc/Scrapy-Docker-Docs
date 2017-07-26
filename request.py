@@ -8,6 +8,8 @@ import hashlib
 import weakref
 import os
 import datetime
+import json
+import requests
 from six.moves.urllib.parse import urlunparse
 
 from w3lib.http import basic_auth_header
@@ -19,6 +21,11 @@ from scrapy.utils.httpobj import urlparse_cached
 from elasticsearch import Elasticsearch
 
 _fingerprint_cache = weakref.WeakKeyDictionary()
+
+ELASTICSEARCH_SEARCH_SERVERS = os.getenv('ELASTICSEARCH_SEARCH_SERVERS')
+ELASTICSEARCH_DATA_INDEX = os.getenv('ELASTICSEARCH_DB_INDEX')
+ELASTICSEARCH_DATA_TYPE = os.getenv('ELASTICSEARCH_DB_TYPE')
+ELASTICSEARCH_SHA_TYPE = os.getenv('ELASTICSEARCH_SHA_TYPE')
 
 def request_fingerprint(request, include_headers=None):
     """
@@ -58,13 +65,16 @@ def request_fingerprint(request, include_headers=None):
         fp = hashlib.sha1()
         fp.update(to_bytes(canonicalize_url(request.url)))
         cache[include_headers] = fp.hexdigest()
-        DATA['timestamp'] = datetime.datetime.now()
-        DATA['url'] = request.url
-        DATA['sha1'] = cache[include_headers]
-        _es.index(index=os.getenv('ELASTICSEARCH_DATA_INDEX'), doc_type=os.getenv('ELASTICSEARCH_SHA_TYPE'),
-                 body=DATA)
-        _es.indices.refresh(index=os.getenv('ELASTICSEARCH_SHA_INDEX'))
-        # print("REDIS_SHA1 : ", cache[include_headers], "URL : ", request.url, "DATA is :", DATA)
+        URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "url:" + "\"" + request.url + "\"" + "&size=1"
+        Session = requests.get(url=URL).content
+        SearchNum = json.loads(Session)['hits']['total']
+        if not SearchNum >= 1:
+            DATA['timestamp'] = datetime.datetime.now()
+            DATA['url'] = request.url
+            DATA['sha1'] = cache[include_headers]
+            _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE,body=DATA)
+            _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
+            # print("REDIS_SHA1 : ", cache[include_headers], "URL : ", request.url, "DATA is :", DATA)
     return cache[include_headers]
 
 
