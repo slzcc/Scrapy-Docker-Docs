@@ -51,7 +51,7 @@ def request_fingerprint(request, include_headers=None):
         fp = hashlib.sha1()
         fp.update(to_bytes(canonicalize_url(request.url)))
         cache[include_headers] = fp.hexdigest()
-        print("REDIS_SHA1:", cache[include_headers])
+        print("REDIS_SHA1 : ", cache[include_headers],"URL : " , request.url)
     return cache[include_headers]
 
 
