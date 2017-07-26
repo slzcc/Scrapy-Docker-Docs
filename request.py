@@ -20,7 +20,7 @@ from elasticsearch import Elasticsearch
 
 _fingerprint_cache = weakref.WeakKeyDictionary()
 
-_es = Elasticsearch(os.getenv['ELASTICSEARCH_DB_SERVER'])
+_es = Elasticsearch(os.getenv('ELASTICSEARCH_DB_SERVER'))
 
 DATA = {}
 
