@@ -59,7 +59,7 @@ def request_fingerprint(request, include_headers=None):
         fp = hashlib.sha1()
         fp.update(to_bytes(canonicalize_url(request.url)))
         cache[include_headers] = fp.hexdigest()
-        DATA['timestamp'] = datetime.now()
+        DATA['timestamp'] = datetime.datetime.now()
         DATA['url'] = request.url
         DATA['sha1'] = cache[include_headers]
         _es.index(index=os.getenv('ELASTICSEARCH_SHA_INDEX'), doc_type=os.getenv('ELASTICSEARCH_SHA_TYPE'),
