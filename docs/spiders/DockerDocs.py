@@ -5,7 +5,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from docs.items import DocsItem
 from Crypto.Hash import SHA
-from scrapy_redis.spiders import RedisSpider
+from .scrapy_redis.spiders import RedisSpider
 from scrapy.utils.python import to_bytes
 from w3lib.url import canonicalize_url
 
