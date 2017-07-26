@@ -1,7 +1,7 @@
 node(){
   stage "GIt"
     git "https://github.com/slzcc/Scrapy-Docker-Docs"
-    sh "mv Scrapy-Docker-Docs/scrapy_redis /usr/local/lib/python3.6/site-packages/"
+    sh "mv scrapy_redis /usr/local/lib/python3.6/site-packages/"
 
   stage "Build"
     registry_addr="registry.aliyuncs.com"
