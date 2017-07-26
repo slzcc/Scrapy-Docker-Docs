@@ -70,7 +70,8 @@ def request_fingerprint(request, include_headers=None):
             # print(URL)
             Session = requests.get(url=URL).content
             for i in json.loads(Session):
-                if not i['hits']['hits']['_source']['url'] == request.url:
+                Url_link = i['hits']['hits']['_source']['url']
+                if not Url_link == request.url:
                     DATA['timestamp'] = datetime.datetime.now()
                     DATA['url'] = request.url
                     DATA['sha1'] = cache[include_headers]
