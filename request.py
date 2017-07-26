@@ -65,17 +65,17 @@ def request_fingerprint(request, include_headers=None):
         fp = hashlib.sha1()
         fp.update(to_bytes(canonicalize_url(request.url)))
         cache[include_headers] = fp.hexdigest()
-        # URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "url:" + "\"" + request.url + "\"" + "&size=1"
+        URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "url:" + "\"" + request.url + "\"" + "&size=1"
         # print(URL)
-        # Session = requests.get(url=URL).content
-        # SearchNum = json.loads(Session)['hits']['total']
-        # if not SearchNum >= 1:
-        DATA['timestamp'] = datetime.datetime.now()
-        DATA['url'] = request.url
-        DATA['sha1'] = cache[include_headers]
-        _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
-        _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
-        # print("REDIS_SHA1 : ", cache[include_headers], "URL : ", request.url, "DATA is :", DATA)
+        Session = requests.get(url=URL).content
+        for i in json.loads(Session)['hits']['total']:
+            if not i['hits']['hits']['_source']['url'] == request.url:
+                DATA['timestamp'] = datetime.datetime.now()
+                DATA['url'] = request.url
+                DATA['sha1'] = cache[include_headers]
+                _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
+                _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
+                # print("REDIS_SHA1 : ", cache[include_headers], "URL : ", request.url, "DATA is :", DATA)
     return cache[include_headers]
 
 
