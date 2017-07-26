@@ -20,10 +20,6 @@ from elasticsearch import Elasticsearch
 
 _fingerprint_cache = weakref.WeakKeyDictionary()
 
-_es = Elasticsearch(os.getenv('ELASTICSEARCH_DB_SERVER'))
-
-DATA = {}
-
 def request_fingerprint(request, include_headers=None):
     """
     Return the request fingerprint.
@@ -51,6 +47,9 @@ def request_fingerprint(request, include_headers=None):
     include_headers argument, which is a list of Request headers to include.
 
     """
+    _es = Elasticsearch(os.getenv('ELASTICSEARCH_DB_SERVER'))
+    DATA = {}
+
     if include_headers:
         include_headers = tuple(to_bytes(h.lower())
                                  for h in sorted(include_headers))
@@ -62,10 +61,10 @@ def request_fingerprint(request, include_headers=None):
         DATA['timestamp'] = datetime.datetime.now()
         DATA['url'] = request.url
         DATA['sha1'] = cache[include_headers]
-        _es.index(index=os.getenv('ELASTICSEARCH_SHA_INDEX'), doc_type=os.getenv('ELASTICSEARCH_SHA_TYPE'),
+        _es.index(index=os.getenv('ELASTICSEARCH_DATA_INDEX'), doc_type=os.getenv('ELASTICSEARCH_SHA_TYPE'),
                  body=DATA)
         _es.indices.refresh(index=os.getenv('ELASTICSEARCH_SHA_INDEX'))
-        print("REDIS_SHA1 : ", cache[include_headers], "URL : ", request.url)
+        # print("REDIS_SHA1 : ", cache[include_headers], "URL : ", request.url, "DATA is :", DATA)
     return cache[include_headers]
 
 
