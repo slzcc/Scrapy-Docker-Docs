@@ -3,6 +3,8 @@ RUN git clone https://github.com/slzcc/Scrapy-Docker-Docs.git && \
     cd Scrapy-Docker-Docs && \
     pip install -r package.txt
 
+COPY scrapy_redis /usr/local/lib/python3.6/site-packages/
+
 ENV REDIS_DB_HOST=127.0.0.1 \
     REDIS_DB_PORT=6379 \
     REDIS_DB_INDEX=0 \
