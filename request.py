@@ -73,12 +73,12 @@ def request_fingerprint(request, include_headers=None):
             #     Url_link = {}
             #     Url_link = i['hits']['hits']['_source']['url']
             #     if not Url_link == request.url:
-                    DATA['timestamp'] = datetime.datetime.now()
-                    DATA['url'] = request.url
-                    DATA['sha1'] = cache[include_headers]
-                    _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
-                    _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
-                    # print("REDIS_SHA1 : ", cache[include_headers], "URL : ", request.url, "DATA is :", DATA)
+            DATA['timestamp'] = datetime.datetime.now()
+            DATA['url'] = request.url
+            DATA['sha1'] = cache[include_headers]
+            _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
+            _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
+            # print("REDIS_SHA1 : ", cache[include_headers], "URL : ", request.url, "DATA is :", DATA)
     return cache[include_headers]
 
 

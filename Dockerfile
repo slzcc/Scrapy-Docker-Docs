@@ -22,6 +22,7 @@ ENV REDIS_DB_HOST=127.0.0.1 \
     DocsURL="http://47.52.73.177:8888" \
     Domains="47.52.73.177" \
     Start=True \
+    REDIS_DUPEFILTER="DockerDocs:dupefilter" \
     TZ=Asia/Shanghai
 
 WORKDIR /Scrapy-Docker-Docs
