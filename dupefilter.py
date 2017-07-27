@@ -113,14 +113,13 @@ class RFPDupeFilter(BaseDupeFilter):
         added = self.server.sadd(self.key, fp)
 
         URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "sha:" + "\"" + fp + "\"" + "&size=1"
-        Session = len(RQ.get(url=URL).content)
-        if Session == 359 or json.loads(Session)['hits']['total'] == 0:
+        Session = RQ.get(url=URL).content
+        if len(Session) == 359 or len(Session) == 122:
             DATA['timestamp'] = datetime.datetime.now()
-            DATA['url']       = request.url
-            DATA['sha1']      = fp
+            DATA['url'] = request.url
+            DATA['sha1'] = fp
             _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
             _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
-            #     # print("URL :", request.url, "SHA1 :", fp)
 
         return added == 0
 
