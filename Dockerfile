@@ -5,9 +5,6 @@ RUN git clone https://github.com/slzcc/Scrapy-Docker-Docs.git && \
 
 COPY dupefilter.py /usr/local/lib/python3.6/site-packages/scrapy_redis/dupefilter.py
 
-RUN apt update && \
-    apt install -y vim
-
 ENV REDIS_DB_HOST=127.0.0.1 \
     REDIS_DB_PORT=6379 \
     REDIS_DB_INDEX=0 \
