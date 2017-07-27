@@ -3,7 +3,7 @@ RUN git clone https://github.com/slzcc/Scrapy-Docker-Docs.git && \
     cd Scrapy-Docker-Docs && \
     pip install -r package.txt
 
-COPY request.py /usr/local/lib/python3.6/site-packages/scrapy/utils/request.py
+COPY dupefilter.py /usr/local/lib/python3.6/site-packages/scrapy/utils/dupefilter.py
 
 ENV REDIS_DB_HOST=127.0.0.1 \
     REDIS_DB_PORT=6379 \
