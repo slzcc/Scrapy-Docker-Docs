@@ -3,8 +3,6 @@ RUN git clone https://github.com/slzcc/Scrapy-Docker-Docs.git && \
     cd Scrapy-Docker-Docs && \
     pip install -r package.txt
 
-#COPY dupefilter.py /usr/local/lib/python3.6/site-packages/scrapy/utils/dupefilter.py
-
 COPY dupefilter.py /usr/local/lib/python3.6/site-packages/scrapy_redis/dupefilter.py
 
 RUN apt update && \

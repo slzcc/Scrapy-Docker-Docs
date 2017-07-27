@@ -143,7 +143,7 @@ class RFPDupeFilter(BaseDupeFilter):
                 _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
                 _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
             else:
-                print("Existing URL :", request.url)
+                pass
 
         return added == 0
 
