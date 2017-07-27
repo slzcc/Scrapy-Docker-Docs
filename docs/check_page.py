@@ -17,8 +17,7 @@ from elasticsearch import Elasticsearch
 # REDIS_PORT = 6379
 # REDIS_INDEX = 0
 
-REDIS_DUPEFILTER = "DockerDocs:dupefilter"
-
+REDIS_DUPEFILTER = os.getenv("REDIS_DUPEFILTER")
 es = Elasticsearch(os.getenv('ELASTICSEARCH_DB_SERVER'))
 DocsURL = os.getenv("DocsURL")
 REDIS_HOST = os.getenv('REDIS_DB_HOST')
