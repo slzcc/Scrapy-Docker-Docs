@@ -21,7 +21,8 @@ ENV REDIS_DB_HOST=127.0.0.1 \
     Rules_All="('',)" \
     DocsURL="http://47.52.73.177:8888" \
     Domains="47.52.73.177" \
-    Start=True
+    Start=True \
+    TZ=Asia/Shanghai
 
 WORKDIR /Scrapy-Docker-Docs
 
