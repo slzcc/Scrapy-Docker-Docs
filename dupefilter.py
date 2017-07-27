@@ -111,8 +111,8 @@ class RFPDupeFilter(BaseDupeFilter):
         added = self.server.sadd(self.key, fp)
         if request.url:
             DATA['timestamp'] = datetime.datetime.now()
-            DATA['url'] = request.url
-            DATA['sha1'] =fp
+            DATA['url']       = request.url
+            DATA['sha1']      = fp
             _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
             _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
         return added == 0
