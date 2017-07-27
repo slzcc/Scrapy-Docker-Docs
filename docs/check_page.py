@@ -17,6 +17,7 @@ from elasticsearch import Elasticsearch
 # REDIS_PORT = 6379
 # REDIS_INDEX = 0
 
+REDIS_KEY = os.getenv('REDIS_KEY')
 REDIS_DUPEFILTER = os.getenv("REDIS_DUPEFILTER")
 es = Elasticsearch(os.getenv('ELASTICSEARCH_DB_SERVER'))
 DocsURL = os.getenv("DocsURL")
@@ -69,6 +70,7 @@ def Check_LEN(Url, SizeValue):
                             es.delete(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_DATA_TYPE, id=SearchDataID)
                             es.delete(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, id=SubSearchDataID)
                             redis_set.srem(REDIS_DUPEFILTER, SubSearchDataSHA1)
+                            redis_set.lpush(REDIS_KEY, SearchDataUrl)
 
 if __name__ == "__main__":
     Source = json.loads(Source)['pages']
