@@ -114,8 +114,9 @@ class RFPDupeFilter(BaseDupeFilter):
 
         URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "sha:" + "\"" + fp + "\"" + "&size=1"
         Session = RQ.get(url=URL).content
+        print("SESSION", Session)
         for i in json.loads(Session)['hits']['hits']:
-            if i['_source']['sha1'] != fp:
+            if not i['_source']['sha1'] == fp:
                 DATA['timestamp'] = datetime.datetime.now()
                 DATA['url']       = request.url
                 DATA['sha1']      = fp
