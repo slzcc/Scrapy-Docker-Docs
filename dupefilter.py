@@ -23,6 +23,20 @@ ELASTICSEARCH_SHA_TYPE = os.getenv('ELASTICSEARCH_SHA_TYPE')
 
 _es = Elasticsearch(ELASTICSEARCH_SEARCH_SERVERS)
 DATA = {}
+Num = {
+  "took": 1,
+  "timed_out": False,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 0,
+    "max_score": None,
+    "hits": []
+  }
+}
 
 # TODO: Rename class to RedisDupeFilter.
 class RFPDupeFilter(BaseDupeFilter):
@@ -114,14 +128,22 @@ class RFPDupeFilter(BaseDupeFilter):
 
         URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "sha:" + "\"" + fp + "\"" + "&size=1"
         Session = RQ.get(url=URL).content
-        if len(Session) == 359 or len(Session) == 122:
-            SearchNum = json.loads(Session)['hits']['total']
-            if SearchNum == 0:
+        print(json.loads(Session))
+        for k in json.loads(Session):
+            if k == 'error' or k == 'status':
                 DATA['timestamp'] = datetime.datetime.now()
                 DATA['url'] = request.url
                 DATA['sha1'] = fp
                 _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
                 _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
+            elif k == 'hits' and json.loads(Session)['hits']['total'] == 0:
+                DATA['timestamp'] = datetime.datetime.now()
+                DATA['url'] = request.url
+                DATA['sha1'] = fp
+                _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
+                _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
+            else:
+                print("Existing URL :", request.url)
 
         return added == 0
 
