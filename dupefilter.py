@@ -24,22 +24,6 @@ ELASTICSEARCH_SHA_TYPE = os.getenv('ELASTICSEARCH_SHA_TYPE')
 _es = Elasticsearch(ELASTICSEARCH_SEARCH_SERVERS)
 DATA = {}
 
-DICTS = {
-      "took" : 1,
-      "timed_out" : False,
-      "_shards" : {
-        "total" : 5,
-        "successful" : 5,
-        "failed" : 0
-      },
-      "hits" : {
-        "total" : 0,
-        "max_score" : None,
-        "hits" : [ ]
-      }
-    }
-
-
 # TODO: Rename class to RedisDupeFilter.
 class RFPDupeFilter(BaseDupeFilter):
     """Redis-based request duplicates filter.
