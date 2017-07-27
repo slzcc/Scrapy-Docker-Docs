@@ -113,15 +113,17 @@ class RFPDupeFilter(BaseDupeFilter):
         added = self.server.sadd(self.key, fp)
         URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "url:" + "\"" + request.url + "\"" + "&size=100"
         Session = requests.get(url=URL).content
-        for i in json.loads(Session):
-            Url_link = i['hits']['hits']['_source']['url']
-            if not Url_link == request.url:
-                DATA['timestamp'] = datetime.datetime.now()
-                DATA['url']       = request.url
-                DATA['sha1']      = fp
-                _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
-                _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
-        # print("URL :", request.url, "SHA1 :", fp)
+        SearchNum = json.loads(Session)['hits']['total']
+        if SearchNum >= 1:
+            for i in json.loads(Session)['hits']['hits']:
+                Url_link = i['_source']['url']
+                if not Url_link == request.url:
+                    DATA['timestamp'] = datetime.datetime.now()
+                    DATA['url']       = request.url
+                    DATA['sha1']      = fp
+                    _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
+                    _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
+            # print("URL :", request.url, "SHA1 :", fp)
         return added == 0
 
     def request_fingerprint(self, request):
