@@ -112,11 +112,10 @@ class RFPDupeFilter(BaseDupeFilter):
         # This returns the number of values added, zero if already exists.
         added = self.server.sadd(self.key, fp)
 
-        URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "url:" + "\"" + request.url + "\"" + "&size=100"
+        URL = ELASTICSEARCH_SEARCH_SERVERS + ELASTICSEARCH_DATA_INDEX + "/" + ELASTICSEARCH_SHA_TYPE + "/" + "_search?q=" + "sha:" + "\"" + fp + "\"" + "&size=1"
         Session = RQ.get(url=URL).content
         for i in json.loads(Session)['hits']['hits']:
-            Url_link = i['_source']['url']
-            if not Url_link == request.url:
+            if i['_source']['sha1'] != fp:
                 DATA['timestamp'] = datetime.datetime.now()
                 DATA['url']       = request.url
                 DATA['sha1']      = fp
