@@ -109,12 +109,12 @@ class RFPDupeFilter(BaseDupeFilter):
         fp = self.request_fingerprint(request)
         # This returns the number of values added, zero if already exists.
         added = self.server.sadd(self.key, fp)
-        if request.url:
-            DATA['timestamp'] = datetime.datetime.now()
-            DATA['url']       = request.url
-            DATA['sha1']      = fp
-            _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
-            _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
+        DATA['timestamp'] = datetime.datetime.now()
+        DATA['url']       = request.url
+        DATA['sha1']      = fp
+        _es.index(index=ELASTICSEARCH_DATA_INDEX, doc_type=ELASTICSEARCH_SHA_TYPE, body=DATA)
+        _es.indices.refresh(index=ELASTICSEARCH_DATA_INDEX)
+        print("URL :", request.url, "SHA1 :", fp)
         return added == 0
 
     def request_fingerprint(self, request):
