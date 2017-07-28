@@ -70,4 +70,4 @@ $ curl -X GET http://192.168.0.3:9200/docs-test/item/_search?q=docker&size=10&pr
 ```
 $  docker run --rm -i --net host -e ELASTICSEARCH_DB_SERVER=http://192.168.0.6:9200/ -e ELASTICSEARCH_DATA_INDEX=docs-test -e REDIS_DB_HOST=192.168.0.6 -e Start=CHECK registry.aliyuncs.com/slzcc/docker-docs:scrapy_redis
 ```
-如果更新页面后，把 Redis 和 Elasticsearch 内的数据清除掉后，重新对 Redis List 里面注入需要更新的 URL，第 3 步骤启动的服务会发现有新的 URL 获取后并爬取数据注入到 Elasticsearch 。
+如果更新页面后，被检测到后会把 Redis 和 Elasticsearch 内的数据清除掉后，重新对 Redis List 里面注入需要更新的 URL，第 3 步骤启动的服务会发现有新的 URL 获取后并爬取数据注入到 Elasticsearch 。
