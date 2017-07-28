@@ -65,6 +65,7 @@ $ curl -X GET http://192.168.0.3:9200/docs-test/item/_search?q=docker&size=10&pr
 ...
 ```
 如果注入 Elasticsearch 数据过慢，请启动多个 3 步骤实例，无上限。
+
 5、Check Update New Page And retake the new content:
 ```
 $  docker run --rm -i --net host -e ELASTICSEARCH_DB_SERVER=http://192.168.0.6:9200/ -e ELASTICSEARCH_DATA_INDEX=docs-test -e REDIS_DB_HOST=192.168.0.6 -e Start=CHECK registry.aliyuncs.com/slzcc/docker-docs:scrapy_redis
