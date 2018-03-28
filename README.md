@@ -5,6 +5,8 @@
 Docker Image
 ```
 registry.aliyuncs.com/slzcc/docker-docs:scrapy_redis
+# or
+slzcc/docker_docs:scrapy_redis
 ```
 具体的 环境变量 定义请查看 [Dockerfile](Dockerfile) 。
 
